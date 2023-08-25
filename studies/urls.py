@@ -1,12 +1,11 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .import views
-from .views import *
+from .views import StudyFavoriteView, StudyViewSet
 
 router = DefaultRouter()
-router.register(r'', views.StudyViewSet)
+router.register(r'', StudyViewSet)
 
 urlpatterns = [
-    path('',include(router.urls)),
-    path('favorite/',StudyFavoriteView.as_view(),name='StudyFavorite'), # 즐겨찾기
+    path('favorite/', StudyFavoriteView.as_view(), name='StudyFavorite'), # 즐겨찾기
+    path('', include(router.urls)),
 ]
