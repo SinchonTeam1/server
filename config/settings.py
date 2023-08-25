@@ -58,12 +58,14 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:8000',
     'http://localhost:3000',
+    'https://port-0-server-54ouz2lllqyba9m.sel3.cloudtype.app'
 
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:8000',
     'http://localhost:3000',
+    'https://port-0-server-54ouz2lllqyba9m.sel3.cloudtype.app'
 
 ]
 
@@ -144,7 +146,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.getenv("DB_ENGINE"),
-        'NAME': os.getenv("NAME"),
+        'NAME': os.getenv("DB_NAME"),
         'HOST': os.getenv("DB_HOST"),
         'USER': os.getenv("DB_USER"),
         'PASSWORD': os.getenv("DB_PASSWORD"),
