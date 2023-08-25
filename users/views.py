@@ -24,17 +24,20 @@ class RegisterView(generics.CreateAPIView):
         data = request.data
         email = data.get('email', '')
         
-        if data['school'] == '서강대학교' and not email.endswith("@sogang.ac.kr"):
-            return Response({"message": "서강대학교 이메일 형식이 아닙니다."}, status=status.HTTP_400_BAD_REQUEST)
-        elif data['school'] == '연세대학교' and not email.endswith("@yonsei.ac.kr"):
-            return Response({"message": "연세대학교 이메일 형식이 아닙니다."}, status=status.HTTP_400_BAD_REQUEST)
-        elif data['school'] == '홍익대학교' and not email.endswith("@g.hongik.ac.kr"):
-            return Response({"message": "홍익대학교 이메일 형식이 아닙니다."}, status=status.HTTP_400_BAD_REQUEST)
-        elif data['school'] == '이화여자대학교' and not email.endswith("@ewhain.net"):
-            return Response({"message": "이화여자대학교 이메일 형식이 아닙니다."}, status=status.HTTP_400_BAD_REQUEST)
-        elif data['school'] not in ['서강대학교', '연세대학교', '홍익대학교', '이화여자대학교']:
+        if not email.endswith("@sogang.ac.kr") and not email.endswith("@yonsei.ac.kr") and not email.endswith("@g.hongik.ac.kr") and not email.endswith("@ewhain.net"):
             return Response({"message": "잘못된 학교 선택입니다."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        data._mutable = True
 
+        if email.endswith("@sogang.ac.kr"):
+            data['school'] = '서강대학교'
+        elif email.endswith("@yonsei.ac.kr"):
+            data['school'] = '연세대학교'
+        elif email.endswith("@g.hongik.ac.kr"):
+            data['school'] = '홍익대학교'
+        elif email.endswith("@ewhain.net"):
+            data['school'] = '이화여자대학교'
+        
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
@@ -83,10 +86,13 @@ class LoginView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserView(generics.ListAPIView):
-    queryset = User.objects.all()
+class UserView(generics.RetrieveUpdateAPIView):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
 
 class LogoutView(APIView):
     def post(self, request):
