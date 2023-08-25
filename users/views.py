@@ -27,14 +27,16 @@ class RegisterView(generics.CreateAPIView):
         if not email.endswith("@sogang.ac.kr") and not email.endswith("@yonsei.ac.kr") and not email.endswith("@g.hongik.ac.kr") and not email.endswith("@ewhain.net"):
             return Response({"message": "잘못된 학교 선택입니다."}, status=status.HTTP_400_BAD_REQUEST)
         
+        data._mutable = True
+
         if email.endswith("@sogang.ac.kr"):
-            data['school'] == '서강대학교'
+            data['school'] = '서강대학교'
         elif email.endswith("@yonsei.ac.kr"):
-            data['school'] == '연세대학교'
+            data['school'] = '연세대학교'
         elif email.endswith("@g.hongik.ac.kr"):
-            data['school'] == '홍익대학교'
+            data['school'] = '홍익대학교'
         elif email.endswith("@ewhain.net"):
-            data['school'] == '이화여자대학교'
+            data['school'] = '이화여자대학교'
         
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
