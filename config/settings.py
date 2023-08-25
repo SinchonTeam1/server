@@ -65,7 +65,7 @@ CORS_ALLOWED_ORIGINS = [
 CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:8000',
     'http://localhost:3000',
-    'https://port-0-server-54ouz2lllqyba9m.sel3.cloudtype.app'
+    'https://port-0-server-54ouz2lllqyba9m.sel3.cloudtype.app',
 
 ]
 

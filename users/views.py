@@ -94,6 +94,12 @@ class UserView(generics.RetrieveUpdateAPIView):
         return self.request.user
 
 
+class UserAllView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny]
+
+
 class LogoutView(APIView):
     def post(self, request):
         logout(request)
