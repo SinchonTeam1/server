@@ -9,7 +9,7 @@ class Study(models.Model):
     created_at = models.DateField(auto_now_add=True) # 게시일
     deadline = models.DateField() # 마감일
     writer = models.ForeignKey(User,on_delete=models.CASCADE) # 작성자 정보
-    memebers = models.ManyToManyField(User, related_name='studies') # 참여자 정보
+    members = models.ManyToManyField(User, related_name='studies') # 참여자 정보
     numbers = models.IntegerField() # 모집인원
     period = models.DurationField() # 예상기간
     start = models.DateField() # 시작예정일
