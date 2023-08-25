@@ -15,9 +15,17 @@ class StudyViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
-        # field = self.query_params.get("")
+        query_params = request.query_params
+        field = query_params.get("field", "")
+        company = query_params.get("company", "")
+        
         queryset = self.filter_queryset(self.get_queryset())
-
+        
+        if field:
+            queryset = queryset.filter(field__icontains=field)
+        
+        if company:
+            queryset = queryset.filter(company__icontains=company)
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
