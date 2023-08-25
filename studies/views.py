@@ -15,6 +15,7 @@ class StudyViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
+        # field = self.query_params.get("")
         queryset = self.filter_queryset(self.get_queryset())
 
         page = self.paginate_queryset(queryset)
