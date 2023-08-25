@@ -13,5 +13,5 @@ class DetailView(views.APIView):
     
     def get(self, request, pk, format=None):
         details=get_object_or_404(Study, pk=pk)
-        serializer=StudySerializer(details)
+        serializer=StudyGetSerializer(details)
         return Response(serializer.data)
