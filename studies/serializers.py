@@ -16,7 +16,7 @@ class WriterSerializer(serializers.ModelSerializer):
 
 class StudyGetSerializer(StudySerializer):
     writer = WriterSerializer()
-    memebers = WriterSerializer(many=True)
+    members = WriterSerializer(many=True)
     class Meta(StudySerializer.Meta):
         pass
 
