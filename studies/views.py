@@ -44,13 +44,13 @@ class StudyFavoriteView(APIView):
 
         favorite_study_ids = StudyFavorite.objects.filter(user_id=user_id).values_list('study_id',flat=True)
         data = Study.objects.filter(id__in=favorite_study_ids)
-        study_list = list(data.values())
+        serializer = StudyGetSerializer(data, many=True)
 
-        # 즐찾 여부 추가
-        for study in study_list:
-            study["is_favorite"] = True
+        # # 즐찾 여부 추가
+        # for study in study_list:
+        #     study["is_favorite"] = True
         
-        return Response(study_list, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
     # 즐겨찾기 등록, 삭제
     def post(self,request):
