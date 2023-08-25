@@ -1,24 +1,29 @@
-from django.shortcuts import render
-from rest_framework import viewsets
 from .models import Study, StudyFavorite
-from .serializers import StudySerializer, StudyFavoriteSerializer
+from .serializers import StudySerializer, StudyFavoriteSerializer, StudyGetSerializer
 
+from rest_framework import viewsets
 from rest_framework import permissions
-from rest_framework import generics
-from rest_framework.views import APIView
-
-from rest_framework.response import Response
 from rest_framework import status
-# from threading import Lock
-# lock = Lock()
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
-# Create your views here.
 
 # 스터디 CRUD 기능
 class StudyViewSet(viewsets.ModelViewSet):
     queryset = Study.objects.all()
     serializer_class = StudySerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = StudyGetSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class StudyFavoriteView(APIView):
