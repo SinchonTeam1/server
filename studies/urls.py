@@ -4,8 +4,8 @@ from .import views
 
 router = DefaultRouter()
 # 모든 StudyViewSet 관련 URL은 /study/로 시작함
-router.register(r'study', views.StudyViewSet)
+#router.register(r'study', views.StudyViewSet)
 
 urlpatterns = [
-    path('api/',include(router.urls))
+    path('',include(router.urls))
 ]
