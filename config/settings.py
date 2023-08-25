@@ -31,7 +31,8 @@ INSTALLED_APPS = [
     'users',
     'studies',
     'details',
-    'rest_framework'
+    'rest_framework',
+    'mypages',
 ]
 
 MIDDLEWARE = [
