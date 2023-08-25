@@ -17,3 +17,8 @@ class Study(models.Model):
     field = models.CharField(max_length=100) # 분야
     company = models.CharField(max_length=100)# 회사
     content = models.TextField() # 스터디 소개글
+
+class StudyFavorite(models.Model):
+    favorite_id = models.IntegerField(primary_key=True)
+    study_id = models.ForeignKey(Study, on_delete=models.CASCADE,null=False)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
